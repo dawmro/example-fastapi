@@ -3,8 +3,8 @@ Description=demo fastapi application
 After=network.target
 
 [Service]
-User=sanjeev
-Group=sanjeev
+User=dawmro
+Group=dawmro
 WorkingDirectory=/home/dawmro/app/src/
 Environment="PATH=/home/dawmro/app/venv/bin"
 EnvironmentFile=/home/dawmro/.env
