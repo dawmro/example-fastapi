@@ -74,6 +74,8 @@ jobs:
   deploy:
     runs-on: ubuntu-20.04
     needs: [build]
+    environment:
+      name: production
     steps:
       - name: Deploy to ubunut server
         uses: appleboy/ssh-action@master
