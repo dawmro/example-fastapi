@@ -3,7 +3,7 @@ name: Build and Deploy Code
 on: [push, pull_request]
 
 jobs:
-  job1:
+  build:
     environment:
       name: testing
 
@@ -70,3 +70,19 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi:latest
+      
+  deploy:
+    runs-on: ubuntu-20.04
+    needs: [build]
+    steps:
+      - name: Deploy to ubunut server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{secrets.PROD_HOST}}
+        username: ${{secrets.PROD_USERNAME}}
+        password: ${{secrets.PROD_PASSWORD}}
+      script: |
+        cd app/src
+        git pull
+        echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
+
